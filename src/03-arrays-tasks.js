@@ -538,15 +538,27 @@ function distinct(arr) {
  *    "Poland" => ["Lodz"]
  *   }
  */
-function group(/* array, keySelector, valueSelector */) {
+function group(array, keySelector, valueSelector) {
   /* const map = new Map();
-  const elements = array.filter((el) => {
+  array.map((el) => {
     if (!map.has(keySelector(el))) {
       map.set(keySelector(el), []);
     }
     return el;
-  }); */
-
+  });
+  array.map((el) => {
+    map.get(keySelector(el)).push(valueSelector(el));
+    return el;
+  });
+  return map; */
+  return array.reduce((map, item) => {
+    if (map.get(keySelector(item))) {
+      map.get(keySelector(item)).push(valueSelector(item));
+    } else {
+      map.set(keySelector(item), [valueSelector(item)]);
+    }
+    return map;
+  }, new Map());
 }
 
 
